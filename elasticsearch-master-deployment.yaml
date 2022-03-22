@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: infra
+  namespace: efk-xpack
   name: elasticsearch-master
   labels:
     app: elasticsearch
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: elasticsearch-master
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
         env:
         - name: CLUSTER_NAME
           value: elasticsearch

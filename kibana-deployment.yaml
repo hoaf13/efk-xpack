@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: infra
+  namespace: efk-xpack
   name: kibana
   labels:
     app: kibana
@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
       - name: kibana
-        image: docker.elastic.co/kibana/kibana:7.3.0
+        image: docker.elastic.co/kibana/kibana:7.4.0
         ports:
         - containerPort: 5601
           name: webinterface
         env:
         - name: ELASTICSEARCH_HOSTS
-          value: "http://elasticsearch-client.infra.svc.cluster.local:9200"
+          value: "http://elasticsearch-client.efk-xpack.svc.cluster.local:9200"
         - name: ELASTICSEARCH_USER
           value: "elastic"
         - name: ELASTICSEARCH_PASSWORD

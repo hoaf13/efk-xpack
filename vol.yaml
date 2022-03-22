@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: es-data-2
+spec:
+  capacity:
+    storage: 5Gi
+  hostPath:
+    path: "/home/os_callbot/workspace/hoaf13/efk-storage"
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard

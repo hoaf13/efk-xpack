@@ -2,13 +2,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: fluentd
-  namespace: infra
+  namespace: efk-xpack
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: fluentd
-  namespace: infra
+  namespace: efk-xpack
 rules:
 - apiGroups:
   - ""
@@ -31,13 +31,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: fluentd
-  namespace: infra
+  namespace: efk-xpack
 ---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: fluentd
-  namespace: infra
+  namespace: efk-xpack
   labels:
     k8s-app: fluentd-logging
     version: v1
@@ -65,7 +65,7 @@ spec:
         image: fluent/fluentd-kubernetes-daemonset:v1.1-debian-elasticsearch
         env:
         - name:  FLUENT_ELASTICSEARCH_HOST
-          value: "elasticsearch-client.infra.svc.cluster.local"
+          value: "elasticsearch-client.efk-xpack.svc.cluster.local"
         - name:  FLUENT_ELASTICSEARCH_PORT
           value: "9200"
         - name: FLUENT_ELASTICSEARCH_SCHEME

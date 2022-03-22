@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: infra
+  namespace: efk-xpack
   name: elasticsearch-data
   labels:
     app: elasticsearch
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: elasticsearch-data
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
         env:
         - name: CLUSTER_NAME
           value: elasticsearch
@@ -57,10 +57,10 @@ spec:
   - metadata:
       name: elasticsearch-data-persistent-storage
       annotations:
-        volume.beta.kubernetes.io/storage-class: "gp2"
+        volume.beta.kubernetes.io/storage-class: "standard"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: standard
       resources:
         requests:
-          storage: 10Gi
+          storage: 5Gi

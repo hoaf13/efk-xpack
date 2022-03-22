@@ -8,7 +8,7 @@ apmConfig:
     queue: {}
 
     output.elasticsearch:
-      hosts: ["http://elasticsearch-client.infra.svc.cluster.local:9200"]
+      hosts: ["elasticsearch-client.efk-xpack.svc.cluster.local:9200"]
       ## If you have security enabled- you'll need to add the credentials
       ## as environment variables
       username: "${ELASTICSEARCH_USERNAME}"
@@ -19,7 +19,6 @@ apmConfig:
       #  - /usr/share/apm-server/config/certs/elastic-ca.pem
 
 replicas: 1
-
 extraContainers: ""
 # - name: dummy-init
 #   image: busybox
@@ -52,7 +51,7 @@ extraVolumes: []
   #   emptyDir: {}
 
 image: "docker.elastic.co/apm/apm-server"
-imageTag: "8.0.0-SNAPSHOT"
+imageTag: "7.4.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -65,8 +64,9 @@ podAnnotations: {}
 # additionals labels
 labels: {}
 
-podSecurityContext:
-  runAsUser: 0
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
   privileged: false
 
 livenessProbe:
