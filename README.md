@@ -31,7 +31,7 @@ kubectl apply  -f elasticsearch-master-configmap.yaml -f elasticsearch-master-se
 ### Check that everything is running with the command:
 
 ```
-kubectl get pods -n infra
+kubectl get pods -n efk-xpack
 ```
 output
 
@@ -49,7 +49,7 @@ kubectl apply -f elasticsearch-data-configmap.yaml -f elasticsearch-data-service
 ### And check that everything is running:
 
 ```
-kubectl get pods -n infra
+kubectl get pods -n efk-xpack
 ```
 output
 
@@ -69,7 +69,7 @@ kubectl apply  -f elasticsearch-client-configmap.yaml -f elasticsearch-client-se
 ### And check that everything is running:
 
 ```
-kubectl get pods -n infra
+kubectl get pods -n efk-xpack
 ```
 output
 
@@ -87,13 +87,13 @@ elasticsearch-master-cd84d8dcb-s76p6     1/1     Running   0          3h36m
 We have enabled the xpack security module to secure the cluster, now execute the command to initialize the passwords: bin/elasticsearch-setup-passwords within the client node container (any node would work) to generate default users and passwords.
 
 ```
-kubectl exec -it $(kubectl get pods -n infra | grep elasticsearch-client | sed -n 1p | awk '{print $1}') -n infra -- bin/elasticsearch-setup-passwords auto -b
+kubectl exec -it $(kubectl get pods -n efk-xpack | grep elasticsearch-client | sed -n 1p | awk '{print $1}') -n efk-xpack -- bin/elasticsearch-setup-passwords auto -b
 ```
 
 ### Note the elastic user password and add it into a k8s secret like this:
 
 ```
-kubectl create secret generic elasticsearch-pw-elastic -n infra --from-literal password=5xxxxxxxxxxxxxxxx
+kubectl create secret generic elasticsearch-pw-elastic -n efk-xpack --from-literal password=5xxxxxxxxxxxxxxxx
 ```
 
 # Setup Kibana with x-pack
@@ -106,7 +106,7 @@ kubectl apply  -f kibana-configmap.yaml -f kibana-service.yaml -f kibana-deploym
 * Check the loadbancer IP for kibana
 
 ```
-kubectl get svc -n infra
+kubectl get svc -n efk-xpack
 ```
 output:-
 

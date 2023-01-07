@@ -56,11 +56,9 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: elasticsearch-data-persistent-storage
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "standard"
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: standard
+      storageClassName: "local-path"
       resources:
         requests:
           storage: 5Gi
